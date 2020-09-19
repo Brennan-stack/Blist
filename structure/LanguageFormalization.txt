@@ -1,0 +1,58 @@
+Formalization of Language:
+
+How it will work:
+Syntnax/function will be shared between the following languages:
+- C
+	- C-style programming language, but with garbage collection
+- Java
+	- java-style for imports
+- Matlab
+	- arrays set up like matlab
+- Typescript
+	- everything else, typescript. Module import design etc. 
+
+Reserved words:
+"if" - if statement
+"while" - while statement
+"return" - return statement 
+"switch" - switch statement
+"case" - case for switch
+"break" - break statement
+"tvar" - temporary variable (within context)
+"var" - shared within file
+"gvar" - global variable (shared across files)
+"char" - character
+
+Parser Tokens:
+"("
+")"
+"["
+"]"
+"{"
+"}"
+","
+";"
+":"
+"+" 
+"-"
+"&"
+"*"
+"="
+"+="
+"-="
+"!"
+"&&"
+"||"
+"++"
+"--"
+"!="
+"=="
+">>" shift right
+"<<" shift left
+
+Speical Tokens:
+IDENTIFIER - all function/variable names
+INTEGER LITERAL - Digits expressly stated in code.
+STRING LITERAL -  Expressions that are "" (pointer values)
+END OF FILE - Distinguishes where the code ends.
+
