@@ -37,7 +37,7 @@ Parser Tokens:
 "-"
 "&"
 "*"
-"="
+"=" 
 "+="
 "-="
 "!"
@@ -56,3 +56,21 @@ INTEGER LITERAL - Digits expressly stated in code.
 STRING LITERAL -  Expressions that are "" (pointer values)
 END OF FILE - Distinguishes where the code ends.
 
+
+What is a function?
+
+Function = Identifer -> Identifier/: -> ,/Identifier -> (possible repeat) -> statement
+
+
+Statement definitions:
+Statements are non-terminal, need information to determine what they contain.
+
+Multiple different paths: 
+1. Compound Statement: "{" -> statements -> "}"
+2. if statement : "if" -> "(" -> expression -> ")" -> statement
+3. while statement: "while" -> "(" -> expression -> ")" -> statement
+4. switch statement: "switch" -> "(" -> expression -> ")" -> Compound statement with case/break pairs
+5. return statement: "return" -> expression -> ";"
+6. variable definition: "tvar"/"gvar"/"var"-> identifier -> ","/"="->expression -> ";"
+7. expression statement: expression -> ";"
+8. no-operation statement: ";"
