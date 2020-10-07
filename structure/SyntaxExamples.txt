@@ -8,10 +8,10 @@
 #include "math.blst"			//Include the math blist file. In B-list, all files are cammel case.
 #include "test2.blst"			//include second test file
 
-#Select GARBAGE_COLLECT	true		//This line sets the Garbage collection param to true, so garbage 
+#select GARBAGE_COLLECT	true		//This line sets the Garbage collection param to true, so garbage 
 					//collection is enabled. 
 
-#Select MEM_USAGE 512000000		//Selects the maximum allowable memory usage for this program to 512 MB (in bytes).
+#select MEM_USAGE 512000000		//Selects the maximum allowable memory usage for this program to 512 MB (in bytes).
 
 
 //create global variables. global variables are shared across files. 
@@ -68,7 +68,7 @@ function main(String args[]) : int {		//This is how the main method is set in B-
 	var g;			//when using var. 
 	
 	//B-list will use x86 Assembly. This is how you write in-line assembly in B-list.
-	#SetState ASSEMBLY_x86 true	//we use the SetState keyword to set the compiler to a specific state for the next few lines.
+	#setState ASSEMBLY_x86 true	//we use the SetState keyword to set the compiler to a specific state for the next few lines.
 					//the state is passed in.	
 		//now we can write x86 assembly code. The assemby code we write is a higher level version (ie registers we specify may not be 
 		//the registers the compiler uses). 
@@ -76,7 +76,7 @@ function main(String args[]) : int {		//This is how the main method is set in B-
 		add eax, 1
 		inc eax
 
-	#EndState			//the EndState keyword changes the compiler state back to the state it was prior to SetState.
+	#endState			//the EndState keyword changes the compiler state back to the state it was prior to SetState.
 	
 	//B-list can also allow in-line binary to be written	
 	#SetState BINARY true

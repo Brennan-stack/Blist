@@ -1,16 +1,5 @@
 Formalization of Language:
 
-How it will work:
-Syntnax/function will be shared between the following languages:
-- C
-	- C-style programming language, but with garbage collection
-- Java
-	- java-style for imports
-- Matlab
-	- arrays set up like matlab
-- Typescript
-	- everything else, typescript. Module import design etc. 
-
 Reserved words:
 "if" - if statement
 "while" - while statement
@@ -18,10 +7,17 @@ Reserved words:
 "switch" - switch statement
 "case" - case for switch
 "break" - break statement
-"tvar" - temporary variable (within context)
-"var" - shared within file
-"gvar" - global variable (shared across files)
-"char" - character
+"include" - include directory
+"select" - select keyword
+"setState" - state set keyword
+"endState" - state end keyword
+"int" - integer declaration keyword
+"String" - string declaration keyword
+"float" - float declaration keyword
+"double" - double declaration keyword
+"char" - char declaration keyword
+"long" - long declaration keyword
+"var" - var declaration keyword
 
 Parser Tokens:
 "("
@@ -52,9 +48,9 @@ Parser Tokens:
 
 Speical Tokens:
 IDENTIFIER - all function/variable names
-INTEGER LITERAL - Digits expressly stated in code.
-STRING LITERAL -  Expressions that are "" (pointer values)
-END OF FILE - Distinguishes where the code ends.
+INTEGER_LITERAL - Digits expressly stated in code.
+STRING_LITERAL -  Expressions that are "" (pointer values)
+END_OF_FILE - Distinguishes where the code ends.
 
 
 What is a function?
