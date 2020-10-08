@@ -11,7 +11,7 @@ char* reconstructFileInput(char* fileName)
 
 	if (filePath == NULL)
 	{
-		printf("Error while opening file %s\n Aborting compilation", fileName);
+		printf("Error while opening file %s\nAborting compilation", fileName);
 		exit(1);
 	}
 
@@ -19,23 +19,16 @@ char* reconstructFileInput(char* fileName)
 	fseek(filePath, 0, SEEK_END);
 	long fileSize = ftell(filePath);
 	fseek(filePath, 0, SEEK_SET);
-
 	char* data = calloc(fileSize + 1, sizeof(char));
 	fread(data, 1, fileSize, filePath);
+	fclose(filePath);
+
 	char* reconstructedData = eliminateSpecialChars(data);
 	//free data array
 	free(data);
-
-	for (int i = 0; i < strlen(reconstructedData); i++)
-	{
-		printf("inputchar: %c %d\n", reconstructedData[i], i);
-	}
-
+	//return the reconstructed Data
 	return reconstructedData;
-
 }
-
-
 
 /**
 Eliminates special characters such as whitespaces, comments, etc.
@@ -47,13 +40,13 @@ char* eliminateSpecialChars(char* data)
 	//allocate new memory location for our string
 	char* ret = calloc(strlen(data), sizeof(char));
 	ret[0] = data[0];
-	long count = 1;
+	long count = 0;
 	bool singleQuote = false;
 	bool multiQuote = false;
 	//loop through each character in the input stream, if special remove. 
-	for (int i = 1; i < strlen(data); i++)
+	for (int i = 0; i < strlen(data) - 1; i++)
 	{
-		char prev = data[i-1];
+		char next = data[i+1];
 		char current = data[i];
 		
 		/**
@@ -78,19 +71,17 @@ char* eliminateSpecialChars(char* data)
 
 				case '/':
 					//test for single line comment
-					if (prev == '/')
+					if (next == '/')
 					{
 						singleQuote = true;
 					}
-				break;
-
-				case '*':
 					//test for multiline comment
-					if (prev == '/')
+					if (next == '*')
 					{
 						multiQuote = true;
 					}
 				break;
+
 
 				default:
 					//default, set character to current.
@@ -105,14 +96,13 @@ char* eliminateSpecialChars(char* data)
 			singleQuote = false;
 		}
 		//check to see if multi-line comment ended
-		if (multiQuote && (current == '/' && prev == '*'))
+		if (multiQuote && (current == '*' && next == '/'))
 		{
 			multiQuote = false;
 		}
 
 	}
-
-	ret = realloc(ret, count * sizeof(char));
+	ret = realloc(ret, count * sizeof(char) + 1);
 	ret[count] = '\0';
 
 	return ret;

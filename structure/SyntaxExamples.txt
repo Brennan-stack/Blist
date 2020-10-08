@@ -39,7 +39,7 @@ function main(String args[]) : int {		//This is how the main method is set in B-
 	String[] array2 = memAl(30 * sizeof(String));
 
 	//if we want to have to free it, for whatever reason, you can exclude it from garbage collection as follows:
-	#Exclude GARBAGE_COLLECT				//exclude is a keyword used to exclude from a select param. 
+	#exclude GARBAGE_COLLECT				//exclude is a keyword used to exclude from a select param. 
 	String[] array3 = memAl(30 * sizeof(String));		//format is #Exclude <select param name>
 	
 	//because we have allocated dynamically and excluded it from garbage collection, we must free it ourself.
@@ -79,14 +79,14 @@ function main(String args[]) : int {		//This is how the main method is set in B-
 	#endState			//the EndState keyword changes the compiler state back to the state it was prior to SetState.
 	
 	//B-list can also allow in-line binary to be written	
-	#SetState BINARY true
+	#setState BINARY true
 		0000 0000 0000 0000		//note the format for the binary. four four-bit clusters per line. 
 		0000 0000 0000 0000
 		0000 0000 0000 0000
 		0000 0000 0000 0000
 		0000 0000 0000 0000
 		0000 0000 0000 0000
-	#EndState			//Ends the BINARY state.
+	#endState			//Ends the BINARY state.
 
 	//for loops are written as follows
 	for (int i = 0; i < 10; i ++)

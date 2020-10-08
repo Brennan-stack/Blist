@@ -1,14 +1,6 @@
-enum Type {
-	WHITESPACE,
-	LINE_BREAK,
-	NEWLINE,
-	LETTER,
-	DIGIT,
-	IDENTIFIER,
-	OPERATOR,
-	STRING_LITERAL,
-	SINGLE_LINE_COMMENT,
-	MULTI_LINE_COMMENT_START,
-	MULTI_LINE_COMMENT_END,
-	END_OF_FILE,
-};
+#ifndef BLISTPROGRAM_H
+#define	BLISTPROGRAM_H
+
+int executeBList(int numInputFiles, char** inputFiles);
+
+#endif

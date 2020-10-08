@@ -4,7 +4,6 @@
 #include <string.h>
 #include "main.h"
 #include "BListProgram.h"
-#include "LineReconstructor.h"
 
 int main(int argc, char** argv)
 {
@@ -12,7 +11,7 @@ int main(int argc, char** argv)
 	for (int i = 0; i < flags->numInputFiles - 1; i++)
 	{
 		printf("%s\n", flags->inputFiles[i]);
-		reconstructFileInput(flags->inputFiles[i]);
+		
 	}
 
 	if (flags->help)
@@ -27,13 +26,14 @@ int main(int argc, char** argv)
 
 	if (flags->version)
 	{
+		
 		printf("BList version %s", "0.0.1 Alpha.\n");
 	}
 
 	if (flags->runInterpreted)
 	{
 		printf("Running BList as interpreter.\n");
-
+		executeBList(flags->numInputFiles, flags->inputFiles);
 	}
 
 	return 0;
@@ -49,7 +49,7 @@ Flags* getFlags(int argc, char** argv)
 	Flags* flags = calloc(1, sizeof(Flags));
 	flags->help = false;
 	flags->version = false;
-	flags->runInterpreted = true;
+	flags->runInterpreted = false;
 	flags->flagError = false;
 	flags->inputFiles = calloc(10, sizeof(char*));
 	//loop through argument count
@@ -86,7 +86,6 @@ Flags* getFlags(int argc, char** argv)
 	}
 
 	flags->numInputFiles = fileCount;
-	flags->runInterpreted = true;
 
 	return flags;
 }
