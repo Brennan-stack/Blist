@@ -12,3 +12,4 @@ Eliminates whitespaces, comments, etc. from
 the input stream.
 **/
 char* eliminateSpecialChars(char* data);
+

@@ -1,25 +1,36 @@
 #include "Token.h"
 #include <string.h>
+#include <stdio.h>
 
 
-Token* makeTokenFull(char* textIn, char* fileIn, long charPos, TokenType type, Operator op)
+Token* makeTokenFull(char* textIn, char* fileIn, int linePosIn, int charPosIn, Type type, Operator op)
 {
 	Token* ret = calloc(1, sizeof(Token));
-	ret->type = type;
-	ret->text = textIn;
-	ret->fileIn = fileIn;
-	ret->charPos = charPos;
+	ret->tokenType = type;
+	ret->textIn = calloc(strlen(textIn) + 1, sizeof(char));
+	strcpy(ret->textIn, textIn);
+	ret->fileIn = calloc(strlen(fileIn) + 1, sizeof(char));
+	strcpy(ret->fileIn, fileIn);
+	ret->linePosIn = linePosIn;
+	ret->charPosIn = charPosIn;
 	ret->op = op;
 	return ret;
 }
 
-Token* makeTokenPartial(char* textIn)
+Token* makeTokenPartial(char* textIn, Type type)
 {
-	Token* ret = calloc(1, sizeof(Token));
-	ret->type = IDENTIFIER;
-	ret->text = textIn;
+
+	Token* ret = calloc(1, 72);
+	if (ret == NULL)
+	{
+		printf("failed to allocate from stack");
+	}
+	ret->tokenType = type;
+	ret->textIn = calloc(strlen(textIn) + 1, sizeof(char));
+	strcpy(ret->textIn, textIn);	
+	ret->linePosIn = 0;
+	ret->charPosIn = 0;
 	ret->fileIn = NULL;
-	ret->charPos = 0;
 	return ret;
 }
 

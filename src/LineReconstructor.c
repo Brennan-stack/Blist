@@ -23,11 +23,11 @@ char* reconstructFileInput(char* fileName)
 	fread(data, 1, fileSize, filePath);
 	fclose(filePath);
 
-	char* reconstructedData = eliminateSpecialChars(data);
+	//char* reconstructedData = eliminateSpecialChars(data);
 	//free data array
-	free(data);
+	//free(data);
 	//return the reconstructed Data
-	return reconstructedData;
+	return data;
 }
 
 /**
@@ -38,7 +38,7 @@ char* eliminateSpecialChars(char* data)
 {
 	if(strlen(data) < 1) return data;
 	//allocate new memory location for our string
-	char* ret = calloc(strlen(data), sizeof(char));
+	char* ret = calloc(2 * strlen(data), sizeof(char));
 	ret[0] = data[0];
 	long count = 0;
 	bool singleQuote = false;
@@ -48,7 +48,6 @@ char* eliminateSpecialChars(char* data)
 	{
 		char next = data[i+1];
 		char current = data[i];
-		
 		/**
 		Special characters: 
 		" ", "\n", "\t", "//", "/*", "* /",
@@ -58,6 +57,12 @@ char* eliminateSpecialChars(char* data)
 			switch(current)
 			{
 				case ' ':
+					if (next != ' ')
+					{
+						ret = realloc(ret, (count + 1) * sizeof(char));
+						ret[count] = current;
+						count++;
+					}
 					//do nothing, character not counted
 				break;
 
@@ -82,9 +87,109 @@ char* eliminateSpecialChars(char* data)
 					}
 				break;
 
+				case '(':
+					ret = realloc(ret, (count + 3) * sizeof(char));
+					ret[count] = ' ';
+					count++;
+					ret[count] = current;
+					count++;
+					ret[count] = ' ';
+					count++;
+				break;
+
+				case ')':
+					ret = realloc(ret, (count + 3) * sizeof(char));
+					ret[count] = ' ';
+					count++;
+					ret[count] = current;
+					count++;
+					ret[count] = ' ';
+					count++;
+				break;
+				
+				case '[':
+					ret = realloc(ret, (count + 3) * sizeof(char));
+					ret[count] = ' ';
+					count++;
+					ret[count] = current;
+					count++;
+					ret[count] = ' ';
+					count++;
+				break;
+				
+				case ']':
+					ret = realloc(ret, (count + 3) * sizeof(char));
+					ret[count] = ' ';
+					count++;
+					ret[count] = current;
+					count++;
+					ret[count] = ' ';
+					count++;
+				break;
+
+				case '{':
+					ret = realloc(ret, (count + 3) * sizeof(char));
+					ret[count] = ' ';
+					count++;
+					ret[count] = current;
+					count++;
+					ret[count] = ' ';
+					count++;
+				break;
+
+				case '}':
+					ret = realloc(ret, (count + 3) * sizeof(char));
+					ret[count] = ' ';
+					count++;
+					ret[count] = current;
+					count++;
+					ret[count] = ' ';
+					count++;
+				break;
+
+				case ';':
+					ret = realloc(ret, (count + 3) * sizeof(char));
+					ret[count] = ' ';
+					count++;
+					ret[count] = current;
+					count++;
+					ret[count] = ' ';
+					count++;
+				break;
+
+				case ':':
+					ret = realloc(ret, (count + 3) * sizeof(char));
+					ret[count] = ' ';
+					count++;
+					ret[count] = current;
+					count++;
+					ret[count] = ' ';
+					count++;
+				break;
+
+				case '=':
+					ret = realloc(ret, (count + 3) * sizeof(char));
+					ret[count] = ' ';
+					count++;
+					ret[count] = current;
+					count++;
+					ret[count] = ' ';
+					count++;
+				break;
+
+				case '#':
+					ret = realloc(ret, (count + 3) * sizeof(char));
+					ret[count] = ' ';
+					count++;
+					ret[count] = current;
+					count++;
+					ret[count] = ' ';
+					count++;
+				break;
 
 				default:
 					//default, set character to current.
+					ret = realloc(ret, (count + 1) * sizeof(char));
 					ret[count] = current;
 					count++;
 				break;
@@ -109,3 +214,4 @@ char* eliminateSpecialChars(char* data)
 
 	
 }
+

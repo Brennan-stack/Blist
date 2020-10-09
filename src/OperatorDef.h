@@ -4,6 +4,7 @@
 #include <stdlib.h>
 #include <stdbool.h>
 #define NUMOPERATORS 32
+#include "uthash.h"
 
 struct _Operator {
 	char* name;
@@ -11,6 +12,7 @@ struct _Operator {
 	int precedence;
 	InputTaken input; 
 	bool overload;
+	UT_hash_handle hh;
 };
 
 typedef struct _Operator Operator;
@@ -24,6 +26,7 @@ static Operator Operators[NUMOPERATORS] = {
 	{"comma",			",",			30,			BOTH,			false}, //for declaration of multiple variables
 	{"orOp",			"||",			35,			BOTH,			false}, //for boolean or
 	{"andOp",			"&&",			36,			BOTH,			false}, //for boolean and
+	{"equal",			"=",			15,			BOTH,			true},
 	{"equal",			"==",			40,			BOTH,			true}, //for comp
 	{"notEqual",		"!=",			40,			BOTH,			false}, //for comp
 	{"greater",			">",			50,			BOTH,			true}, //for comp
@@ -47,9 +50,16 @@ static Operator Operators[NUMOPERATORS] = {
 	{"closePeren",		")",			99,			BOTH,			false}, //for function declarations/mathematics
 	{"openSqBrkt",		"[",			100,		BOTH,			false}, //for array declarations
 	{"closeSqBrkt",		"]",			99,			BOTH,			false}, //for array declarations
-	{"semicolon",		";",			101,		LEFT,			false}, //for end line
+
 };
 
+void addToOperatorMap(Operator* op);
+
+Operator* getOperatorFromMap(char* sequence);
+
+void populateOperators();
+
+//void createOperator(char* name, char* text, int precedence, InputTaken input, bool overload);
 
 
 
