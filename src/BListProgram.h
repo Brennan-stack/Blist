@@ -1,6 +1,7 @@
 #ifndef BLISTPROGRAM_H
 #define	BLISTPROGRAM_H
+#include "main.h"
 
-int executeBList(int numInputFiles, char** inputFiles);
+int executeBList(Flags* flags);
 
 #endif

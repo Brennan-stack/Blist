@@ -18,11 +18,11 @@ typedef struct _CharType CharType;
 
 void addToMap(char charac, Type type);
 
-Type getCharType(char* file, int index);
+Type getCharType(char* file, int index, int size);
 
 void setUpLexer();
 
-Token** lex(char* fileInput);
+Token** lex(char* fileInput, bool debug);
 
 char* getCharTypeToString(Type st);
 

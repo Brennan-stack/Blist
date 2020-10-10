@@ -33,9 +33,9 @@ struct _Token {
 
 typedef struct _Token Token;
 
-Token* makeTokenFull(char* textIn, char* fileIn, int linePosIn, int charPosIn, Type type, Operator op);
+Token* makeTokenFull(char* textIn, char* fileIn, int textInSize, int fileInSize, int linePosIn, int charPosIn, Type type, Operator op);
 
-Token* makeTokenPartial(char* textIn, Type type);
+Token* makeTokenPartial(char* textIn, int textInSize, Type type);
 
 int identifyToken(char* textIn, char* fileIn, long charPos);
 #endif

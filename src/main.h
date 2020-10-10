@@ -13,6 +13,9 @@ struct _Flags {
 	bool version;
 	bool help;
 	bool runInterpreted; 
+	bool lexerDebug;
+	bool parserDebug;
+	
 };
 typedef struct _Flags Flags;
 

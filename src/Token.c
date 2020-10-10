@@ -3,7 +3,7 @@
 #include <stdio.h>
 
 
-Token* makeTokenFull(char* textIn, char* fileIn, int linePosIn, int charPosIn, Type type, Operator op)
+Token* makeTokenFull(char* textIn, char* fileIn, int textInSize, int fileInSize, int linePosIn, int charPosIn, Type type, Operator op)
 {
 	Token* ret = calloc(1, sizeof(Token));
 	ret->tokenType = type;
@@ -17,7 +17,7 @@ Token* makeTokenFull(char* textIn, char* fileIn, int linePosIn, int charPosIn, T
 	return ret;
 }
 
-Token* makeTokenPartial(char* textIn, Type type)
+Token* makeTokenPartial(char* textIn, int textInSize, Type type)
 {
 
 	Token* ret = calloc(1, 72);

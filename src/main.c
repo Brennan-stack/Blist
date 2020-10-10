@@ -2,7 +2,6 @@
 #include <stdbool.h>
 #include <stdlib.h>
 #include <string.h>
-#include "main.h"
 #include "BListProgram.h"
 
 int main(int argc, char** argv)
@@ -33,7 +32,7 @@ int main(int argc, char** argv)
 	if (flags->runInterpreted)
 	{
 		printf("Running BList as interpreter.\n");
-		executeBList(flags->numInputFiles, flags->inputFiles);
+		executeBList(flags);
 	}
 
 	return 0;
@@ -70,6 +69,14 @@ Flags* getFlags(int argc, char** argv)
 			else if (*flag == 'i')
 			{
 				flags->runInterpreted = true;
+			}
+			else if (*flag == 'l')
+			{
+				flags->lexerDebug = true;
+			}
+			else if (*flag == 'p')
+			{
+				flags->parserDebug = true;
 			}
 			else
 			{
