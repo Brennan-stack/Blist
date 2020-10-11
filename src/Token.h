@@ -29,13 +29,14 @@ struct _Token {
 	int charPosIn;
 	int linePosIn;
 	Operator op;
+
 };
 
 typedef struct _Token Token;
 
 Token* makeTokenFull(char* textIn, char* fileIn, int textInSize, int fileInSize, int linePosIn, int charPosIn, Type type, Operator op);
 
-Token* makeTokenPartial(char* textIn, int textInSize, Type type);
+Token* makeTokenPartial(char* textIn, char* fileIn, int textInSize, int fileInSize, int linePosIn, int charPosIn, Type type);
 
 int identifyToken(char* textIn, char* fileIn, long charPos);
 #endif

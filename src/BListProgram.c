@@ -1,5 +1,4 @@
 #include "BListProgram.h"
-#include "LineReconstructor.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include "Lexer.h"

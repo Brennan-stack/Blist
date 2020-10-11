@@ -1,6 +1,6 @@
 #ifndef RESOLVEKEYWORDS_H
 #define RESLOVEKEYWORDS_H
-#define NUMKEYWORDS 15
+#define NUMKEYWORDS 16
 #include "uthash.h"
 #include <stdlib.h>
 #include <stdbool.h>
@@ -18,20 +18,21 @@ static Keyword Keywords[NUMKEYWORDS] = {
 	{"var",			"var",			0,		true},
 	{"integer",		"int",			1,		false},
 	{"float",		"float",		2,		false},
-	{"character",	"char",			3,		false},
-	{"double",		"double",		4,		false},
-	{"string",		"String",		5,		false},
-	{"void",		"void",			6,		false},
+	{"long",		"long",			3,		false},
+	{"character",	"char",			4,		false},
+	{"double",		"double",		5,		false},
+	{"string",		"String",		6,		false},
+	{"void",		"void",			7,		false},
 	//static types
-	{"include",		"include",		7,		false},
-	{"setState",	"setState",		8,		false},
-	{"endState",	"endState",		9,		false},
-	{"select",		"select",		10,		false},
+	{"include",		"include",		8,		false},
+	{"setState",	"setState",		9,		false},
+	{"endState",	"endState",		10,		false},
+	{"select",		"select",		11,		false},
 	//modifiers
-	{"static",		"static",		11,		false},
-	{"global",		"global",		12,		false},
-	{"mutable",		"mutable",		13,		false},
-	{"immutable",	"immutable",	14,		false},
+	{"static",		"static",		12,		false},
+	{"global",		"global",		13,		false},
+	{"mutable",		"mutable",		14,		false},
+	{"immutable",	"immutable",	15,		false},
 
 };
 

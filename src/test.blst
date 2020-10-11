@@ -89,7 +89,7 @@ function main(String args[]) : int {		//This is how the main method is set in B-
 	#endState			//Ends the BINARY state.
 
 	//for loops are written as follows
-	for (int i = 0; i < 10; i ++)
+	for (int i = 0; i < 10; i++)
 	{
 		//the body of the for loop. It can be broken as follows:
 		break loop; //note we can break it by simply saying break. The break command is: break <optional specification>;
@@ -121,3 +121,8 @@ function main(String args[]) : int {		//This is how the main method is set in B-
 	return 0;			//return value of 0, lets os know execution was successful
 					//-1 means problem. All other values are user-defined and optional. 
 }					//this is how you end a function in B-list.
+i++)
+for (int i = 0; i < 30; i++);
+for (int i=0; i<30; i++);
+for (int i = 0; i < 30; i++);
++++

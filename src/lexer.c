@@ -38,7 +38,7 @@ void setUpLexer()
 	addToMap(';', LINE_BREAK);
 	addToMap(' ', WHITESPACE);
 	addToMap('\t', WHITESPACE);
-	addToMap('\r', WHITESPACE);
+	addToMap('\r', NEW_LINE);
 	addToMap('_', LETTER);
 	addToMap('"', STRING_QUOTE);
 	addToMap('{', DELIM);
@@ -91,7 +91,7 @@ Token** lex(char* fileInput, bool debug)
 
 	Type type = WHITESPACE;
 	start = clock();
-	for (int i = 0; i < fileSize; i++)
+	for (int i = 0; i <= fileSize; i++)
 	{
 		//ret[i] = getCharType(data, i);
 		Type charType = getCharType(data, i, fileSize);
@@ -109,6 +109,9 @@ Token** lex(char* fileInput, bool debug)
 				else if (type == OPERATOR)
 				{
 
+
+					
+
 					Operator* op = getOperatorFromMap(tokenLine);
 					if (op != NULL)
 					{
@@ -118,28 +121,91 @@ Token** lex(char* fileInput, bool debug)
 						count++;
 					}
 					else{
-						int currentCount = count;
+
 						if (tokenLength > 1)
 						{
-							for (int j = 0; j < strlen(tokenLine); j++)
+							char prev = tokenLine[0];
+							int charCount = 0;
+							int prevOffset = 0;
+							
+							for (int k = 0; k <= tokenLength; k++)
 							{
-								char* l = calloc(1, sizeof(char));
-								l[0] = tokenLine[j];
-								Operator* singleOp = getOperatorFromMap(l);
-								if (singleOp != NULL)
+								if (prev == tokenLine[k] && k != tokenLength)
 								{
-									Token* f = makeTokenFull(l, fileInput, tokenLength, fileNameSize, lineNum, charNum + j, OPERATOR, *singleOp);
-									ret = realloc(ret, count * sizeof(Token*));
-									ret[count-1] = f;
-									count++;
-									
+									charCount++;
 								}
 								else
 								{
-									printf("ERROR: INVALID TOKEN, ABORTING CODE");
-									exit(1);
+									char* sub = calloc(charCount + 1, sizeof(char));
+									strncpy(sub, tokenLine + prevOffset, charCount);
+									prevOffset += charCount;
+
+									Operator* singleOp = getOperatorFromMap(sub);
+									if (singleOp != NULL)
+									{
+										Token* f = makeTokenFull(sub, fileInput, tokenLength, fileNameSize, lineNum, prevOffset, OPERATOR, *singleOp);
+										ret = realloc(ret, count * sizeof(Token*));
+										ret[count-1] = f;
+										count++;
+										free(sub);
+									}
+									else
+									{
+										for (int j = 0; j < charCount; j++)
+										{
+											char* m = calloc(1, sizeof(char));
+											m[0] = sub[j];
+											Operator* singleOp = getOperatorFromMap(m);
+											if (singleOp != NULL)
+											{
+												Token* f = makeTokenFull(m, fileInput, tokenLength, fileNameSize, lineNum,  charNum, OPERATOR, *singleOp);
+												ret = realloc(ret, count * sizeof(Token*));
+												ret[count-1] = f;
+												count++;
+												free(m);
+												
+									
+											}
+											else
+											{
+												printf("ERROR: INVALID TOKEN, ABORTING CODE");
+												free(m);
+												exit(1);
+											}	
+											k++;
+										}
+										free(sub);
+										//exit(1);
+									}	//*/	
+
+									/*char* m = calloc(1, sizeof(char));
+									m[0] = tokenLine[k];
+									Operator* singleOp = getOperatorFromMap(m);
+									if (singleOp != NULL)
+									{
+										Token* f = makeTokenFull(m, fileInput, tokenLength, fileNameSize, lineNum, charNum + k, OPERATOR, *singleOp);
+										ret = realloc(ret, count * sizeof(Token*));
+										ret[count-1] = f;
+										count++;
+									
+									}
+									else
+									{
+										printf("ERROR: INVALID TOKEN, ABORTING CODE");
+										exit(1);
+									}	*/			
+									
 								}
+								
+										
 							}
+								//printf("ERROR: INVALID TOKEN, ABORTING CODE");
+								//exit(1);
+							
+							charCount = 0;
+								
+															
+							
 						}
 						
 					}
@@ -164,7 +230,7 @@ Token** lex(char* fileInput, bool debug)
 						ret[count-1] = full;
 						count++;*/
 
-						Token* part = makeTokenPartial(tokenLine, tokenLength, KEYWORD);
+						Token* part = makeTokenPartial(tokenLine, fileInput, tokenLength, fileNameSize, lineNum, charNum, KEYWORD);
 						ret = realloc(ret, count * sizeof(Token*));
 						//printf("TOKEN COUNT: %s\n", tokenLine);
 						ret[count - 1] = part;
@@ -173,7 +239,7 @@ Token** lex(char* fileInput, bool debug)
 					else
 					{
 					//printf("partial %s\n", tokenLine);
-						Token* part = makeTokenPartial(tokenLine, tokenLength, type);
+						Token* part = makeTokenPartial(tokenLine, fileInput, tokenLength, fileNameSize, lineNum, charNum, type);
 						ret = realloc(ret, count * sizeof(Token*));
 						//printf("TOKEN COUNT: %s\n", tokenLine);
 						ret[count - 1] = part;
@@ -199,6 +265,7 @@ Token** lex(char* fileInput, bool debug)
 					tokenLine = realloc(tokenLine, (tokenLength + 2) * sizeof(char));
 					tokenLine[tokenLength + 1] = '\0';
 					tokenLine[tokenLength] = a;
+					tokenLength++;
 				}
 				else if (data[i] == '\\')
 				{
@@ -206,6 +273,7 @@ Token** lex(char* fileInput, bool debug)
 					tokenLine = realloc(tokenLine, (tokenLength + 2) * sizeof(char));
 					tokenLine[tokenLength + 1] = '\0';
 					tokenLine[tokenLength] = a;
+					tokenLength++;
 				}
 				else if (data[i] == 't')
 				{
@@ -213,6 +281,7 @@ Token** lex(char* fileInput, bool debug)
 					tokenLine = realloc(tokenLine, (tokenLength + 2) * sizeof(char));
 					tokenLine[tokenLength + 1] = '\0';
 					tokenLine[tokenLength] = a;
+					tokenLength++;
 				}
 				else if( data[i] == '"')
 				{
@@ -220,6 +289,7 @@ Token** lex(char* fileInput, bool debug)
 					tokenLine = realloc(tokenLine, (tokenLength + 2) * sizeof(char));
 					tokenLine[tokenLength + 1] = '\0';
 					tokenLine[tokenLength] = a;
+					tokenLength++;
 				}
 				else
 				{
@@ -228,21 +298,21 @@ Token** lex(char* fileInput, bool debug)
 			}
 			else
 			{
+				
 				char app = data[i];
 				tokenLine = realloc(tokenLine, (tokenLength + 2) * sizeof(char));
 				tokenLine[tokenLength + 1] = '\0';
 				tokenLine[tokenLength] = app;
 				tokenLength++;
-
+				
 				//strncat(tokenLine, &app, 5);
 				//printf("LEN%d\n", strlen(tokenLine));
 			}
 
 		}
-		
+				type = tokenType;
 
-
-		if (data[i] == '\n')
+		if (data[i] == '\n' || data[i] == '\r')
 		{
 			lineNum++;
 			charNum = 1;
@@ -251,9 +321,6 @@ Token** lex(char* fileInput, bool debug)
 		{
 			charNum++;
 		}
-
-		type = tokenType;
-
 	}
 
 	end = clock();
@@ -263,7 +330,7 @@ Token** lex(char* fileInput, bool debug)
 		
 		for (int i = 0; i < count - 1; i ++)
 		{
-			printf("\tSequence: %-15s\tType: %-15s\n",ret[i]->textIn, getCharTypeToString(ret[i]->tokenType));
+			printf("\tSequence: %-15s\tType: %-15s\tLine: %-15d\tChar: %-15d\t\n",ret[i]->textIn, getCharTypeToString(ret[i]->tokenType), ret[i]->linePosIn, ret[i]->charPosIn);
 		}
 	}
 	cpu_time_used = ((double) (end - start)) / CLOCKS_PER_SEC;

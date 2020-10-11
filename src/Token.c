@@ -7,9 +7,9 @@ Token* makeTokenFull(char* textIn, char* fileIn, int textInSize, int fileInSize,
 {
 	Token* ret = calloc(1, sizeof(Token));
 	ret->tokenType = type;
-	ret->textIn = calloc(strlen(textIn) + 1, sizeof(char));
+	ret->textIn = calloc(textInSize + 1, sizeof(char));
 	strcpy(ret->textIn, textIn);
-	ret->fileIn = calloc(strlen(fileIn) + 1, sizeof(char));
+	ret->fileIn = calloc(fileInSize + 1, sizeof(char));
 	strcpy(ret->fileIn, fileIn);
 	ret->linePosIn = linePosIn;
 	ret->charPosIn = charPosIn;
@@ -17,20 +17,21 @@ Token* makeTokenFull(char* textIn, char* fileIn, int textInSize, int fileInSize,
 	return ret;
 }
 
-Token* makeTokenPartial(char* textIn, int textInSize, Type type)
+Token* makeTokenPartial(char* textIn, char* fileIn, int textInSize, int fileInSize, int linePosIn, int charPosIn, Type type)
 {
 
-	Token* ret = calloc(1, 72);
+	Token* ret = calloc(1, sizeof(Token));
 	if (ret == NULL)
 	{
 		printf("failed to allocate from stack");
 	}
 	ret->tokenType = type;
-	ret->textIn = calloc(strlen(textIn) + 1, sizeof(char));
+	ret->textIn = calloc(textInSize + 1, sizeof(char));
 	strcpy(ret->textIn, textIn);	
-	ret->linePosIn = 0;
-	ret->charPosIn = 0;
-	ret->fileIn = NULL;
+	ret->linePosIn = linePosIn;
+	ret->charPosIn = charPosIn;
+	ret->fileIn = calloc(fileInSize + 1, sizeof(char));
+	strcpy(ret->fileIn, fileIn);
 	return ret;
 }
 
