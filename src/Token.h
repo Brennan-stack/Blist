@@ -1,26 +1,7 @@
 #ifndef TOKEN_H
 #define TOKEN_H
 #include "OperatorDef.h"
-enum _Type {IDENTIFIER, 
-			UNKNOWN, 
-			COMMENT,
-			SINGLE_COMMENT_START,
-			BLOCK_COMMENT_START, 
-			BLOCK_COMMENT_END,
-			BLOCK_COMMENT,
-			NEW_LINE,
-			KEYWORD, 
-			DELIM, 
-			NUM, 
-			OPERATOR, 
-			LITERAL, 
-			STRING_LITERAL, 
-			LINE_END,
-			LETTER, 
-			WHITESPACE,
-			LINE_BREAK,
-			STRING_QUOTE};
-typedef enum _Type Type;
+
 
 struct _Token {
 	Type tokenType;

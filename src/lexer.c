@@ -8,6 +8,8 @@
 bool setup = false;
 clock_t start, end;
 double cpu_time_used;
+CharType* chm = NULL;
+
 void setUpLexer()
 {
 
@@ -30,7 +32,14 @@ void setUpLexer()
 	{
 		for (int j = 0; j < strlen(Operators[i].text); j++)
 		{
-			addToMap(Operators[i].text[j], OPERATOR);
+			CharType* hm;
+			int a = Operators[i].text[j];
+			HASH_FIND_INT(chm, &a, hm);
+			if (hm == NULL)
+			{
+				printf("added %c to map\n", Operators[i].text[j]);
+				addToMap(Operators[i].text[j], Operators[i].tokenType);
+			}
 		}
 	}
 	
@@ -115,7 +124,7 @@ Token** lex(char* fileInput, bool debug)
 					Operator* op = getOperatorFromMap(tokenLine);
 					if (op != NULL)
 					{
-						Token* full = makeTokenFull(tokenLine, fileInput, tokenLength, fileNameSize, lineNum, charNum, OPERATOR, *op);
+						Token* full = makeTokenFull(tokenLine, fileInput, tokenLength, fileNameSize, lineNum, charNum, op->tokenType, *op);
 						ret = realloc(ret, count * sizeof(Token*));
 						ret[count-1] = full;
 						count++;
@@ -143,7 +152,7 @@ Token** lex(char* fileInput, bool debug)
 									Operator* singleOp = getOperatorFromMap(sub);
 									if (singleOp != NULL)
 									{
-										Token* f = makeTokenFull(sub, fileInput, tokenLength, fileNameSize, lineNum, prevOffset, OPERATOR, *singleOp);
+										Token* f = makeTokenFull(sub, fileInput, tokenLength, fileNameSize, lineNum, prevOffset, singleOp->tokenType, *singleOp);
 										ret = realloc(ret, count * sizeof(Token*));
 										ret[count-1] = f;
 										count++;
@@ -158,7 +167,7 @@ Token** lex(char* fileInput, bool debug)
 											Operator* singleOp = getOperatorFromMap(m);
 											if (singleOp != NULL)
 											{
-												Token* f = makeTokenFull(m, fileInput, tokenLength, fileNameSize, lineNum,  charNum, OPERATOR, *singleOp);
+												Token* f = makeTokenFull(m, fileInput, tokenLength, fileNameSize, lineNum,  charNum, singleOp->tokenType, *singleOp);
 												ret = realloc(ret, count * sizeof(Token*));
 												ret[count-1] = f;
 												count++;
@@ -214,15 +223,15 @@ Token** lex(char* fileInput, bool debug)
 				else 
 				{
 					Operator* op = getOperatorFromMap(tokenLine);
-					Keyword* kw;
+					//Keyword* kw;
 					if (op != NULL)
 					{
-						Token* full = makeTokenFull(tokenLine, fileInput, tokenLength, fileNameSize, lineNum, charNum, OPERATOR, *op);
+						Token* full = makeTokenFull(tokenLine, fileInput, tokenLength, fileNameSize, lineNum, charNum, op->tokenType, *op);
 						ret = realloc(ret, count * sizeof(Token*));
 						ret[count-1] = full;
 						count++;
 					}
-					else if ((kw = getKeywordFromMap(tokenLine)) != NULL)
+					/*else if ((kw = getKeywordFromMap(tokenLine)) != NULL)
 					{
 						/*
 						Token* full = makeTokenFull(tokenLine, fileInput, lineNum, charNum, OPERATOR, *op);
@@ -230,12 +239,12 @@ Token** lex(char* fileInput, bool debug)
 						ret[count-1] = full;
 						count++;*/
 
-						Token* part = makeTokenPartial(tokenLine, fileInput, tokenLength, fileNameSize, lineNum, charNum, KEYWORD);
+					/*	Token* part = makeTokenPartial(tokenLine, fileInput, tokenLength, fileNameSize, lineNum, charNum, KEYWORD);
 						ret = realloc(ret, count * sizeof(Token*));
 						//printf("TOKEN COUNT: %s\n", tokenLine);
 						ret[count - 1] = part;
 						count++;
-					}
+					}*/
 					else
 					{
 					//printf("partial %s\n", tokenLine);
@@ -338,9 +347,6 @@ Token** lex(char* fileInput, bool debug)
 	return ret;
 
 }
-
-CharType* chm = NULL;
-
 void addToMap(char charac, Type type)
 {
 	int temp = charac;
